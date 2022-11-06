@@ -1,0 +1,169 @@
+<!Doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width,
+        initial-scale=1.0"/>
+        <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <title>weather App</title>
+        <style>
+           .List{
+            display: inline-block;
+           
+           }
+           ul>li{
+            list-style: none;
+           }
+         
+          
+       .container{
+        background-color: white;
+       }
+       #searchbar{
+       border-radius: 20px;
+        height: 100px;
+       
+       }
+       .footer{
+        text-align: left;
+       }
+       
+       .image{
+        height: 50%;
+        background-color: rgb(42, 44, 165);
+       }
+       sup{
+        vertical-align: super;
+        font-size: medium;
+       }
+       sub{
+        vertical-align: sub;
+        font-size:  50px;
+       }
+
+       form{
+        display: flex;
+        padding-top: 20px;
+       }
+       .row{
+        margin-bottom: 50px;
+       
+       }
+       footer{
+        margin-top: 30px;
+        padding-top: 30px;
+
+
+       }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div id="searchbar">
+                <form>
+                    <div class="col-5">
+                        <label for="" class="visually-hidden">type city here</label>
+                        <input type="type city here" class="form-control cityname" id="type city here" placeholder="type city here">
+                      </div>
+                      <div class="col-2">
+                        <button type="submit" class="btn btn-primary mb-3" onClick="JavaScript:printCity(event)">Search</button>
+                      </div> 
+                </form>
+
+            </div>
+                    <h1 class="cname">
+                        Manhattan
+                    </h1>
+                    
+                    <ul>
+                         <li>
+                             Sunday 06:00
+                        </li>
+                         <li class="description">
+                              clear
+                         </li>
+                    </ul>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="iconimg"> <img 
+                                src="https://ssl.gstatic.com/onebox/weather/64/sunny.png" alt="clear"
+                                /></p>
+                           
+                           
+                            <strong><sub>66</sub></strong><sup><a href="#" onclick="fahrenheitToCelsuis();return false;">°C</a> | <a  href="#" onclick="celsuisToFahrenheit();return false;">°F</a></sup>
+                        </div>
+                        <div class="col-6">
+                            <ul class="List">
+                               
+                                <li>
+                                    Humidity: <span class="humid">84</span>%
+                                </li>
+                                <li>
+                                    wind: <span class="windspeed">5km/h</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <a href=""> Open source code By </a>
+                         Victorine Bekotto.
+
+                         <a href="https://github.com/vickyrafna/shecodes7/index.html"> link to project</a>
+                        
+                    </div>
+        </div>
+       
+        
+       <script>
+
+        let apiKey="3e552t11bd148932ba26fo2b9a557f20";
+       
+        
+        function printCity(event) {
+            event.preventDefault();
+            let cityname = document.querySelector(".cityname");
+            //console.log(cityname.value);
+            let apiUrl=`https://api.shecodes.io/weather/v1/current?query=${cityname.value}&key=${apiKey}&units=metric`;
+            axios.get(apiUrl).then(displayTemperature);
+        }
+                    
+        function displayTemperature(response){
+            //event.preventDefault();
+            console.log(response.data);
+
+            let cname = document.querySelector(".cname");
+            let iconimg = document.querySelector(".iconimg");
+            let windspeed = document.querySelector(".windspeed");
+            let humid = document.querySelector(".humid");
+            let temp = document.querySelector("sub");
+            let description = document.querySelector(".description");
+
+
+            cname.innerHTML = response.data.city;           
+            iconimg.innerHTML = `<img src=\"${response.data.condition.icon_url}\">`;            
+            windspeed.innerHTML = response.data.wind.speed;
+            humid.innerHTML = response.data.temperature.humidity;  
+            temp.innerHTML = response.data.temperature.current;  
+            description.innerHTML = response.data.condition.description;
+        }
+
+        function celsuisToFahrenheit(degreecelcuis) {
+            degreecelcuis = document.querySelector("sub").innerHTML;  
+            let fahrenheit = (degreecelcuis * 9) / 5 + 32;
+            let temp = document.querySelector("sub");
+            temp.innerHTML = fahrenheit;
+        }
+
+        function fahrenheitToCelsuis(degreef) {
+            degreef = document.querySelector("sub").innerHTML;  
+            let celsuis = ((degreef - 32) * 5) / 9;
+            let temp = document.querySelector("sub");
+            temp.innerHTML = celsuis;
+        }
+       
+        
+       </script> 
+           
+    </body>
+    </html>

@@ -144,7 +144,7 @@
             iconimg.innerHTML = `<img src=\"${response.data.condition.icon_url}\">`;            
             windspeed.innerHTML = response.data.wind.speed;
             humid.innerHTML = response.data.temperature.humidity;  
-            temp.innerHTML = response.data.temperature.current;  
+            temp.innerHTML = Math.round( response.data.temperature.current); 
             description.innerHTML = response.data.condition.description;
         }
 
@@ -152,14 +152,14 @@
             degreecelcuis = document.querySelector("sub").innerHTML;  
             let fahrenheit = (degreecelcuis * 9) / 5 + 32;
             let temp = document.querySelector("sub");
-            temp.innerHTML = fahrenheit;
+            temp.innerHTML = Math.round(fahrenheit);
         }
 
         function fahrenheitToCelsuis(degreef) {
             degreef = document.querySelector("sub").innerHTML;  
             let celsuis = ((degreef - 32) * 5) / 9;
             let temp = document.querySelector("sub");
-            temp.innerHTML = celsuis;
+            temp.innerHTML = Math.round(celsuis);
         }
        
         
